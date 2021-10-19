@@ -4,7 +4,7 @@ using ParkingControl.Entities;
 
 namespace ParkingControl.Repositories
 {
-  public class InMemParkingsRepository
+  public class InMemParkingsRepository : IParkingsRepository
   {
     private readonly List<Parking> parkings = new()
     {
