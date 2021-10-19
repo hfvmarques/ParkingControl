@@ -7,5 +7,8 @@ namespace ParkingControl.Repositories
   {
     Parking GetParking(int id);
     IEnumerable<Parking> GetParkings();
+
+    void CreateParking(Parking parking);
+    void UpdateParkingOut(Parking parking);
   }
 }

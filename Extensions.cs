@@ -11,7 +11,10 @@ namespace ParkingControl
       {
         Id = parking.Id,
         Plate = parking.Plate,
-        EntryTime = parking.EntryTime
+        EntryDate = parking.EntryDate,
+        ExitDate = parking.ExitDate,
+        Paid = parking.Paid,
+        Left = parking.Left
       };
     }
   }
