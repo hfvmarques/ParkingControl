@@ -45,7 +45,15 @@ namespace ParkingControl.Controllers
     [HttpPost]
     public ActionResult<ParkingDTO> CreateParking(CreateParkingDTO parkingDTO)
     {
-      var lastId = GetParkings().Last().Id;
+      int lastId;
+      if (GetParkings().LastOrDefault() is null)
+      {
+        lastId = 0;
+      }
+      else
+      {
+        lastId = GetParkings().Last().Id;
+      }
 
       Parking parking = new()
       {
@@ -62,7 +70,7 @@ namespace ParkingControl.Controllers
       return CreatedAtAction(nameof(GetParking), new { id = parking.Id }, parking.AsDTO());
     }
 
-    // PUT /parkings/{id}
+    // PUT /parking/{id}
     [HttpPut("{id}")]
     public ActionResult UpdateParkingOut(int id, UpdateParkingOutDTO parkingDTO)
     {
