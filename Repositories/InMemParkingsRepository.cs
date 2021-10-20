@@ -48,5 +48,11 @@ namespace ParkingControl.Repositories
       var index = parkings.FindIndex(existingParking => existingParking.Id == parking.Id);
       parkings[index] = parking;
     }
+
+    public void UpdateParkingPay(Parking parking)
+    {
+      var index = parkings.FindIndex(existingParking => existingParking.Id == parking.Id);
+      parkings[index] = parking;
+    }
   }
 }

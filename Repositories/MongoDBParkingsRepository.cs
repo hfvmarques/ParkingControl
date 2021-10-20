@@ -39,5 +39,11 @@ namespace ParkingControl.Repositories
       var filter = filterBuilder.Eq(existingParking => existingParking.Id, parking.Id);
       parkingsCollection.ReplaceOne(filter, parking);
     }
+
+    public void UpdateParkingPay(Parking parking)
+    {
+      var filter = filterBuilder.Eq(existingParking => existingParking.Id, parking.Id);
+      parkingsCollection.ReplaceOne(filter, parking);
+    }
   }
 }

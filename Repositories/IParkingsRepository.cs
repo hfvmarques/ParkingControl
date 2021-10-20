@@ -10,5 +10,6 @@ namespace ParkingControl.Repositories
 
     void CreateParking(Parking parking);
     void UpdateParkingOut(Parking parking);
+    void UpdateParkingPay(Parking parking);
   }
 }

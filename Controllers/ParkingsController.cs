@@ -71,7 +71,7 @@ namespace ParkingControl.Controllers
     }
 
     // PUT /parking/{id}
-    [HttpPut("{id}")]
+    [HttpPut("{id}/out")]
     public ActionResult UpdateParkingOut(int id, UpdateParkingOutDTO parkingDTO)
     {
       var existingParking = repository.GetParking(id);
@@ -83,8 +83,28 @@ namespace ParkingControl.Controllers
 
       Parking updatedParking = existingParking with
       {
+        Left = true
+      };
+
+      repository.UpdateParkingOut(updatedParking);
+
+      return NoContent();
+    }
+
+    // PUT /parking/{id}
+    [HttpPut("{id}/pay")]
+    public ActionResult UpdateParkingPay(int id, UpdateParkingOutDTO parkingDTO)
+    {
+      var existingParking = repository.GetParking(id);
+
+      if (existingParking is null)
+      {
+        return NotFound();
+      }
+
+      Parking updatedParking = existingParking with
+      {
         ExitDate = DateTimeOffset.UtcNow,
-        Left = true,
         Paid = true
       };
 
