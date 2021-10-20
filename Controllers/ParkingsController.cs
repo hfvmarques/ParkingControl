@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ParkingControl.DTOs;
 using ParkingControl.Entities;
@@ -21,6 +22,12 @@ namespace ParkingControl.Controllers
 
     // GET /parking
     [HttpGet]
+    public async Task<IEnumerable<ParkingDTO>> GetParkingsAsync()
+    {
+      var parkings = (await repository.GetParkingsAsync()).Select(parking => parking.AsDTO());
+      return parkings;
+    }
+
     public IEnumerable<ParkingDTO> GetParkings()
     {
       var parkings = repository.GetParkings().Select(parking => parking.AsDTO());
@@ -29,9 +36,9 @@ namespace ParkingControl.Controllers
 
     // GET /parking/{id}
     [HttpGet("{id}")]
-    public ActionResult<ParkingDTO> GetParking(int id)
+    public async Task<ActionResult<ParkingDTO>> GetParkingAsync(int id)
     {
-      var parking = repository.GetParking(id);
+      var parking = await repository.GetParkingAsync(id);
 
       if (parking is null)
       {
@@ -43,7 +50,7 @@ namespace ParkingControl.Controllers
 
     // POST /parkings
     [HttpPost]
-    public ActionResult<ParkingDTO> CreateParking(CreateParkingDTO parkingDTO)
+    public async Task<ActionResult<ParkingDTO>> CreateParkingAsync(CreateParkingDTO parkingDTO)
     {
       int lastId;
       if (GetParkings().LastOrDefault() is null)
@@ -65,16 +72,16 @@ namespace ParkingControl.Controllers
         Left = false
       };
 
-      repository.CreateParking(parking);
+      await repository.CreateParkingAsync(parking);
 
-      return CreatedAtAction(nameof(GetParking), new { id = parking.Id }, parking.AsDTO());
+      return CreatedAtAction(nameof(GetParkingAsync), new { id = parking.Id }, parking.AsDTO());
     }
 
     // PUT /parking/{id}
     [HttpPut("{id}/out")]
-    public ActionResult UpdateParkingOut(int id, UpdateParkingOutDTO parkingDTO)
+    public async Task<ActionResult> UpdateParkingOutAsync(int id, UpdateParkingOutDTO parkingDTO)
     {
-      var existingParking = repository.GetParking(id);
+      var existingParking = await repository.GetParkingAsync(id);
 
       if (existingParking is null)
       {
@@ -86,16 +93,16 @@ namespace ParkingControl.Controllers
         Left = true
       };
 
-      repository.UpdateParkingOut(updatedParking);
+      await repository.UpdateParkingOutAsync(updatedParking);
 
       return NoContent();
     }
 
     // PUT /parking/{id}
     [HttpPut("{id}/pay")]
-    public ActionResult UpdateParkingPay(int id, UpdateParkingOutDTO parkingDTO)
+    public async Task<ActionResult> UpdateParkingPayAsync(int id, UpdateParkingOutDTO parkingDTO)
     {
-      var existingParking = repository.GetParking(id);
+      var existingParking = await repository.GetParkingAsync(id);
 
       if (existingParking is null)
       {
@@ -108,7 +115,7 @@ namespace ParkingControl.Controllers
         Paid = true
       };
 
-      repository.UpdateParkingOut(updatedParking);
+      await repository.UpdateParkingOutAsync(updatedParking);
 
       return NoContent();
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using ParkingControl.Entities;
@@ -18,15 +19,20 @@ namespace ParkingControl.Repositories
       parkingsCollection = database.GetCollection<Parking>(collectionName);
     }
 
-    public void CreateParking(Parking parking)
+    public async Task CreateParkingAsync(Parking parking)
     {
-      parkingsCollection.InsertOne(parking);
+      await parkingsCollection.InsertOneAsync(parking);
     }
 
-    public Parking GetParking(int id)
+    public async Task<Parking> GetParkingAsync(int id)
     {
       var filter = filterBuilder.Eq(parking => parking.Id, id);
-      return parkingsCollection.Find(filter).SingleOrDefault();
+      return await parkingsCollection.Find(filter).SingleOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<Parking>> GetParkingsAsync()
+    {
+      return await parkingsCollection.Find(new BsonDocument()).ToListAsync();
     }
 
     public IEnumerable<Parking> GetParkings()
@@ -34,16 +40,16 @@ namespace ParkingControl.Repositories
       return parkingsCollection.Find(new BsonDocument()).ToList();
     }
 
-    public void UpdateParkingOut(Parking parking)
+    public async Task UpdateParkingOutAsync(Parking parking)
     {
       var filter = filterBuilder.Eq(existingParking => existingParking.Id, parking.Id);
-      parkingsCollection.ReplaceOne(filter, parking);
+      await parkingsCollection.ReplaceOneAsync(filter, parking);
     }
 
-    public void UpdateParkingPay(Parking parking)
+    public async Task UpdateParkingPayAsync(Parking parking)
     {
       var filter = filterBuilder.Eq(existingParking => existingParking.Id, parking.Id);
-      parkingsCollection.ReplaceOne(filter, parking);
+      await parkingsCollection.ReplaceOneAsync(filter, parking);
     }
   }
 }
