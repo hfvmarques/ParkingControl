@@ -88,12 +88,9 @@ namespace ParkingControl.Api.Controllers
         return NotFound();
       }
 
-      Parking updatedParking = existingParking with
-      {
-        Left = true
-      };
+      existingParking.Left = true;
 
-      await repository.UpdateParkingOutAsync(updatedParking);
+      await repository.UpdateParkingOutAsync(existingParking);
 
       return NoContent();
     }
@@ -109,13 +106,10 @@ namespace ParkingControl.Api.Controllers
         return NotFound();
       }
 
-      Parking updatedParking = existingParking with
-      {
-        ExitDate = DateTimeOffset.UtcNow,
-        Paid = true
-      };
+      existingParking.ExitDate = DateTimeOffset.UtcNow;
+      existingParking.Paid = true;
 
-      await repository.UpdateParkingOutAsync(updatedParking);
+      await repository.UpdateParkingOutAsync(existingParking);
 
       return NoContent();
     }

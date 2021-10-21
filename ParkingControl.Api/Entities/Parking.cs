@@ -2,13 +2,13 @@ using System;
 
 namespace ParkingControl.Api.Entities
 {
-  public record Parking
+  public class Parking
   {
-    public int Id { get; init; }
-    public string Plate { get; init; }
-    public DateTimeOffset EntryDate { get; init; }
-    public Nullable<DateTimeOffset> ExitDate { get; init; }
-    public Boolean Paid { get; init; }
-    public Boolean Left { get; init; }
+    public int Id { get; set; }
+    public string Plate { get; set; }
+    public DateTimeOffset EntryDate { get; set; }
+    public Nullable<DateTimeOffset> ExitDate { get; set; }
+    public Boolean Paid { get; set; }
+    public Boolean Left { get; set; }
   }
 }

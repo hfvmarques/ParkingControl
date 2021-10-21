@@ -7,15 +7,13 @@ namespace ParkingControl.Api
   {
     public static ParkingDTO AsDTO(this Parking parking)
     {
-      return new ParkingDTO
-      {
-        Id = parking.Id,
-        Plate = parking.Plate,
-        EntryDate = parking.EntryDate,
-        ExitDate = parking.ExitDate,
-        Paid = parking.Paid,
-        Left = parking.Left
-      };
+      return new ParkingDTO(
+        parking.Id,
+        parking.Plate,
+        parking.EntryDate,
+        parking.ExitDate,
+        parking.Paid,
+        parking.Left);
     }
   }
 }

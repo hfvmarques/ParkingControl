@@ -51,9 +51,7 @@ namespace ParkingControl.UnitTests
       var result = await controller.GetParkingAsync(rand.Next(1, 1000));
 
       //Assert
-      result.Value.Should().BeEquivalentTo(
-          expectedParking,
-          options => options.ComparingByMembers<Parking>());
+      result.Value.Should().BeEquivalentTo(expectedParking);
     }
 
     [Fact]
@@ -74,9 +72,7 @@ namespace ParkingControl.UnitTests
       var actualParkings = await controller.GetParkingsAsync();
 
       // Assert
-      actualParkings.Should().BeEquivalentTo(
-          expectedParkings,
-          options => options.ComparingByMembers<Parking>());
+      actualParkings.Should().BeEquivalentTo(expectedParkings);
     }
 
     [Fact]
@@ -106,7 +102,7 @@ namespace ParkingControl.UnitTests
     public async Task CreateParkingAsync_WithParkingToCreate_ReturnsCreatedParking()
     {
       // Arrange
-      var parkingToCreate = new CreateParkingDTO() { Plate = "ABC-1234" };
+      var parkingToCreate = new CreateParkingDTO("ABC-1234");
 
       var controller = new ParkingsController(repositoryStub.Object);
 
@@ -175,7 +171,7 @@ namespace ParkingControl.UnitTests
           .ReturnsAsync(existingParking);
 
       var parkingId = existingParking.Id;
-      var parkingToUpdatePay = new UpdateParkingPayDTO() { };
+      var parkingToUpdatePay = new UpdateParkingPayDTO();
 
       var controller = new ParkingsController(repositoryStub.Object);
 
