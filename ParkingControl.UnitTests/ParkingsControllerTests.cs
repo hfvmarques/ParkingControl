@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +74,31 @@ namespace ParkingControl.UnitTests
 
       // Assert
       actualParkings.Should().BeEquivalentTo(expectedParkings);
+    }
+
+    [Fact]
+    public async Task GetParkingsAsync_WithMatchingPlates_ReturnsMatchingParkings()
+    {
+      // Arrange
+      var allParkings = new[] {
+            new Parking(){ Plate = "ABC-1234"},
+            new Parking(){ Plate = "DEF-5678"},
+            new Parking(){ Plate = "ABC-1234"}
+        };
+
+      var plateToMatch = "ABC-1234";
+
+      repositoryStub.Setup(repo => repo.GetParkingsAsync()).ReturnsAsync(allParkings);
+
+      var controller = new ParkingsController(repositoryStub.Object);
+
+      // Act
+      IEnumerable<ParkingDTO> foundParkings = await controller.GetParkingsAsync(plateToMatch);
+
+      // Assert
+      foundParkings.Should().OnlyContain(
+        parking => parking.Plate == allParkings[0].Plate || parking.Plate == allParkings[2].Plate
+      );
     }
 
     [Fact]

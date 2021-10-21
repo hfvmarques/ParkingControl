@@ -22,9 +22,15 @@ namespace ParkingControl.Api.Controllers
 
     // GET /parking
     [HttpGet]
-    public async Task<IEnumerable<ParkingDTO>> GetParkingsAsync()
+    public async Task<IEnumerable<ParkingDTO>> GetParkingsAsync(string plate = null)
     {
       var parkings = (await repository.GetParkingsAsync()).Select(parking => parking.AsDTO());
+
+      if (!string.IsNullOrWhiteSpace(plate))
+      {
+        parkings = parkings.Where(parking => parking.Plate.Equals(plate, StringComparison.OrdinalIgnoreCase));
+      }
+
       return parkings;
     }
 
