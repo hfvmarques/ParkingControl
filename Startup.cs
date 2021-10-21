@@ -74,7 +74,10 @@ namespace ParkingControl
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ParkingControl v1"));
       }
 
-      app.UseHttpsRedirection();
+      if (env.IsDevelopment())
+      {
+        app.UseHttpsRedirection();
+      }
 
       app.UseRouting();
 
