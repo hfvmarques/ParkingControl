@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ParkingControl.DTOs;
-using ParkingControl.Entities;
-using ParkingControl.Repositories;
+using ParkingControl.Api.DTOs;
+using ParkingControl.Api.Entities;
+using ParkingControl.Api.Repositories;
 
-namespace ParkingControl.Controllers
+namespace ParkingControl.Api.Controllers
 {
   [ApiController]
   [Route("parking")]

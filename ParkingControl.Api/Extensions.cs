@@ -1,7 +1,7 @@
-using ParkingControl.DTOs;
-using ParkingControl.Entities;
+using ParkingControl.Api.DTOs;
+using ParkingControl.Api.Entities;
 
-namespace ParkingControl
+namespace ParkingControl.Api
 {
   public static class Extensions
   {

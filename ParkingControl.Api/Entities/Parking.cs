@@ -1,6 +1,6 @@
 using System;
 
-namespace ParkingControl.Entities
+namespace ParkingControl.Api.Entities
 {
   public record Parking
   {

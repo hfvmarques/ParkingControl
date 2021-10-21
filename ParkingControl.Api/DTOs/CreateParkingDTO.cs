@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ParkingControl.DTOs
+namespace ParkingControl.Api.DTOs
 {
   public record CreateParkingDTO
   {

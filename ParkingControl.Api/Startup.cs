@@ -19,10 +19,10 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using ParkingControl.Repositories;
-using ParkingControl.Settings;
+using ParkingControl.Api.Repositories;
+using ParkingControl.Api.Settings;
 
-namespace ParkingControl
+namespace ParkingControl.Api
 {
   public class Startup
   {

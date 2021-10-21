@@ -1,9 +1,9 @@
 // using System.Collections.Generic;
 // using System.Linq;
 // using System.Threading.Tasks;
-// using ParkingControl.Entities;
+// using ParkingControl.Api.Entities;
 
-// namespace ParkingControl.Repositories
+// namespace ParkingControl.Api.Repositories
 // {
 //   public class InMemParkingsRepository : IParkingsRepository
 //   {

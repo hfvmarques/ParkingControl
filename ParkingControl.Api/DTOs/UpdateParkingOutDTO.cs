@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ParkingControl.DTOs
+namespace ParkingControl.Api.DTOs
 {
-  public record UpdateParkingPayDTO
+  public record UpdateParkingOutDTO
   {
     // no properties for this method
   }

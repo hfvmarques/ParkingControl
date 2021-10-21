@@ -6,12 +6,12 @@ ENV ASPNETCORE_URLS=http://+:80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ParkingControl.csproj", "./"]
-RUN dotnet restore "ParkingControl.csproj"
+COPY ["ParkingControl.Api.csproj", "./"]
+RUN dotnet restore "ParkingControl.Api.csproj"
 COPY . .
-RUN dotnet publish "ParkingControl.csproj" -c Release -o /app/publish
+RUN dotnet publish "ParkingControl.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "ParkingControl.dll"]
+ENTRYPOINT ["dotnet", "ParkingControl.Api.dll"]

@@ -1,6 +1,6 @@
 using System;
 
-namespace ParkingControl.DTOs
+namespace ParkingControl.Api.DTOs
 {
   public record ParkingDTO
   {

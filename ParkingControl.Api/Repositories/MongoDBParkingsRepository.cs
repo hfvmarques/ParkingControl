@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using ParkingControl.Entities;
+using ParkingControl.Api.Entities;
 
-namespace ParkingControl.Repositories
+namespace ParkingControl.Api.Repositories
 {
   public class MongoDBParkingsRepository : IParkingsRepository
   {

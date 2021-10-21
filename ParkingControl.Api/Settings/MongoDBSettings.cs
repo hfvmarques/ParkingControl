@@ -1,4 +1,4 @@
-namespace ParkingControl.Settings
+namespace ParkingControl.Api.Settings
 {
   public class MongoDBSettings
   {
