@@ -100,7 +100,7 @@ namespace ParkingControl.Api.Controllers
 
     // PUT /parking/{id}
     [HttpPut("{id}/pay")]
-    public async Task<ActionResult> UpdateParkingPayAsync(int id, UpdateParkingOutDTO parkingDTO)
+    public async Task<ActionResult> UpdateParkingPayAsync(int id, UpdateParkingPayDTO parkingDTO)
     {
       var existingParking = await repository.GetParkingAsync(id);
 
