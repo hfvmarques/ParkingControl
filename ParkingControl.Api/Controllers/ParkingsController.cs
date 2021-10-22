@@ -71,7 +71,7 @@ namespace ParkingControl.Api.Controllers
       Parking parking = new()
       {
         Id = lastId + 1,
-        Plate = parkingDTO.Plate,
+        Plate = parkingDTO.Plate.ToUpper(),
         EntryDate = DateTimeOffset.UtcNow,
         ExitDate = null,
         Paid = false,
