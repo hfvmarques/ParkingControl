@@ -84,24 +84,6 @@ namespace ParkingControl.Api.Controllers
     }
 
     // PUT /parking/{id}
-    [HttpPut("{id}/out")]
-    public async Task<ActionResult> UpdateParkingOutAsync(int id, UpdateParkingOutDTO parkingDTO)
-    {
-      var existingParking = await repository.GetParkingAsync(id);
-
-      if (existingParking is null)
-      {
-        return NotFound();
-      }
-
-      existingParking.Left = true;
-
-      await repository.UpdateParkingOutAsync(existingParking);
-
-      return NoContent();
-    }
-
-    // PUT /parking/{id}
     [HttpPut("{id}/pay")]
     public async Task<ActionResult> UpdateParkingPayAsync(int id, UpdateParkingPayDTO parkingDTO)
     {
@@ -114,6 +96,29 @@ namespace ParkingControl.Api.Controllers
 
       existingParking.ExitDate = DateTimeOffset.UtcNow;
       existingParking.Paid = true;
+
+      await repository.UpdateParkingOutAsync(existingParking);
+
+      return NoContent();
+    }
+
+    // PUT /parking/{id}
+    [HttpPut("{id}/out")]
+    public async Task<ActionResult> UpdateParkingOutAsync(int id, UpdateParkingOutDTO parkingDTO)
+    {
+      var existingParking = await repository.GetParkingAsync(id);
+
+      if (existingParking is null)
+      {
+        return NotFound();
+      }
+
+      if (existingParking.Paid == false)
+      {
+        return NoContent();
+      }
+
+      existingParking.Left = true;
 
       await repository.UpdateParkingOutAsync(existingParking);
 

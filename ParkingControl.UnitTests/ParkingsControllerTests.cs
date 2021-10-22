@@ -166,6 +166,30 @@ namespace ParkingControl.UnitTests
     }
 
     [Fact]
+    public async Task UpdateParkingOutAsync_WithUnpaidParking_ReturnsNoContent()
+    {
+      // Arrange
+      var existingParking = CreateRandomParking();
+
+      repositoryStub.Setup(
+          repo => repo
+          .GetParkingAsync(It.IsAny<int>()))
+          .ReturnsAsync(existingParking);
+
+      var parkingId = existingParking.Id;
+      existingParking.Paid = false;
+      var parkingToUpdateOut = new UpdateParkingOutDTO() { };
+
+      var controller = new ParkingsController(repositoryStub.Object);
+
+      // Act
+      var result = await controller.UpdateParkingOutAsync(parkingId, parkingToUpdateOut);
+
+      // Assert
+      result.Should().BeOfType<NoContentResult>();
+    }
+
+    [Fact]
     public async Task UpdateParkingOutAsync_WithUnexistingParking_ReturnsNotFound()
     {
       // Arrange
