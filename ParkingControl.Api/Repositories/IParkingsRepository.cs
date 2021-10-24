@@ -12,5 +12,6 @@ namespace ParkingControl.Api.Repositories
     Task CreateParkingAsync(Parking parking);
     Task UpdateParkingOutAsync(Parking parking);
     Task UpdateParkingPayAsync(Parking parking);
+    Task DeleteParkingAsync(int id);
   }
 }

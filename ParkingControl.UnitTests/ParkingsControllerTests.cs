@@ -252,6 +252,48 @@ namespace ParkingControl.UnitTests
       result.Result.Should().BeOfType<NotFoundResult>();
     }
 
+    [Fact]
+    public async Task DeleteParkingAsync_WithExistingParking_ReturnsNoContent()
+    {
+      // Arrange
+      var existingParking = CreateRandomParking();
+
+      repositoryStub.Setup(
+          repo => repo
+          .GetParkingAsync(It.IsAny<int>()))
+          .ReturnsAsync(existingParking);
+
+      var parkingId = existingParking.Id;
+
+      var controller = new ParkingsController(repositoryStub.Object);
+
+      // Act
+      var result = await controller.DeleteParkingAsync(parkingId);
+
+      // Assert
+      result.Should().BeOfType<NoContentResult>();
+    }
+
+    [Fact]
+    public async Task DeleteParkingAsync_WithUnexistingParking_ReturnsNotFound()
+    {
+      // Arrange
+      var existingParking = CreateRandomParking();
+
+      repositoryStub.Setup(
+          repo => repo
+          .GetParkingAsync(It.IsAny<int>()))
+          .ReturnsAsync((Parking)null);
+
+      var controller = new ParkingsController(repositoryStub.Object);
+
+      // Act
+      var result = await controller.GetParkingAsync(rand.Next(1, 1000));
+
+      // Assert
+      result.Result.Should().BeOfType<NotFoundResult>();
+    }
+
     private Parking CreateRandomParking()
     {
       return new()

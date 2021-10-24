@@ -51,5 +51,11 @@ namespace ParkingControl.Api.Repositories
       var filter = filterBuilder.Eq(existingParking => existingParking.Id, parking.Id);
       await parkingsCollection.ReplaceOneAsync(filter, parking);
     }
+
+    public async Task DeleteParkingAsync(int id)
+    {
+      var filter = filterBuilder.Eq(parking => parking.Id, id);
+      await parkingsCollection.DeleteOneAsync(filter);
+    }
   }
 }

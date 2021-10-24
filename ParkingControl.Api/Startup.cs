@@ -52,6 +52,7 @@ namespace ParkingControl.Api
       {
         options.SuppressAsyncSuffixInActionNames = false;
       });
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParkingControl", Version = "v1" });

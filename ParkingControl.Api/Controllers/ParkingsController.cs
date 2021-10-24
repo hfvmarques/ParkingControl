@@ -29,6 +29,18 @@ namespace ParkingControl.Api.Controllers
       if (!string.IsNullOrWhiteSpace(plate))
       {
         parkings = parkings.Where(parking => parking.Plate.Equals(plate, StringComparison.OrdinalIgnoreCase));
+
+        // foreach(ParkingDTO p in parkings)
+        // {
+        //   TimeSpan duration = p.EntryDate.Subtract((DateTimeOffset)p.ExitDate);
+        //   var matchingParkings = new Object(){ 
+        //     p.Id, 
+        //     duration.TotalMinutes, 
+        //     p.Paid, 
+        //     p.Left};
+
+        //     return matchingParkings;
+        // }
       }
 
       return parkings;
@@ -121,6 +133,22 @@ namespace ParkingControl.Api.Controllers
       existingParking.Left = true;
 
       await repository.UpdateParkingOutAsync(existingParking);
+
+      return NoContent();
+    }
+
+    // DELETE /parking/{id}
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteParkingAsync(int id)
+    {
+      var existingParking = await repository.GetParkingAsync(id);
+
+      if (existingParking is null)
+      {
+        return NotFound();
+      }
+
+      await repository.DeleteParkingAsync(id);
 
       return NoContent();
     }
