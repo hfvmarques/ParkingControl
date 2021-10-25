@@ -1,0 +1,21 @@
+# db:
+#   image: mongo
+#   container_name: mongo
+#   restart: always
+#   ports:
+#     - 27017:27017
+#   environment:
+#     MONGO_INITDB_ROOT_USERNAME: mongoadmin
+#     MONGO_INITDB_ROOT_PASSWORD: Pass#word1
+
+# webapi:
+#   image: hfvmarques/parkingcontrol:v4
+#   container_name: parkingcontrol
+#   restart: always
+#   environment:
+#     MongoDBSettings__Host: localhost
+#     MongoDBSettings__Pasword: Pass#word1
+#   ports:
+#     - 8080:80
+#   volumes:
+#     - ./src/app
