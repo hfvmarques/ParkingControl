@@ -7,7 +7,7 @@ API Web criada a partir de desafio de processo seletivo da empresa Parafuzo, que
 - docker network create mongoparking
 - docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin 
 -e MONGO_INITDB_ROOT_PASSWORD=Pass#word1 --network=mongoparking mongo
-- docker run -it --rm -p 8080:80 é MongoDBSettings:Host=mongo -e MongoDBSettings:Password=Pass#word1 --network=mongoparking hfvmarques/parkingcontrol:v4
+- docker run -it --rm -p 8080:80 -e MongoDBSettings:Host=mongo -e MongoDBSettings:Password=Pass#word1 --network=mongoparking hfvmarques/parkingcontrol:v4
 
 Talvez dê alguns problemas de timeout quando rodar o comando do mongo, mas é só rodar novamente que ele retoma de onde parou o download;
 
