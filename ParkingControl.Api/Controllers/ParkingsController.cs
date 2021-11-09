@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using ParkingControl.Api.DTOs;
 using ParkingControl.Api.Entities;
 using ParkingControl.Api.Repositories;
@@ -30,18 +31,6 @@ namespace ParkingControl.Api.Controllers
       if (!string.IsNullOrWhiteSpace(plate))
       {
         parkings = parkings.Where(parking => parking.Plate.Equals(plate, StringComparison.OrdinalIgnoreCase));
-
-        // foreach(ParkingDTO p in parkings)
-        // {
-        //   TimeSpan duration = p.EntryDate.Subtract((DateTimeOffset)p.ExitDate);
-        //   var matchingParkings = new Object(){ 
-        //     p.Id, 
-        //     duration.TotalMinutes, 
-        //     p.Paid, 
-        //     p.Left};
-
-        //     return matchingParkings;
-        // }
       }
 
       return parkings;
@@ -55,7 +44,7 @@ namespace ParkingControl.Api.Controllers
 
     // GET /parking/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<ParkingDTO>> GetParkingAsync(int id)
+    public async Task<ActionResult<ParkingDTO>> GetParkingAsync(ObjectId id)
     {
       var parking = await repository.GetParkingAsync(id);
 
@@ -71,19 +60,9 @@ namespace ParkingControl.Api.Controllers
     [HttpPost]
     public async Task<ActionResult<ParkingDTO>> CreateParkingAsync(CreateParkingDTO parkingDTO)
     {
-      int lastId;
-      if (GetParkings().LastOrDefault() is null)
-      {
-        lastId = 0;
-      }
-      else
-      {
-        lastId = GetParkings().Last().Id;
-      }
-
       Parking parking = new()
       {
-        Id = lastId + 1,
+        Id = new ObjectId(),
         Plate = parkingDTO.Plate.ToUpper(),
         EntryDate = DateTimeOffset.UtcNow,
         ExitDate = null,
@@ -98,7 +77,7 @@ namespace ParkingControl.Api.Controllers
 
     // PUT /parking/{id}
     [HttpPut("{id}/pay")]
-    public async Task<ActionResult> UpdateParkingPayAsync(int id, UpdateParkingPayDTO parkingDTO)
+    public async Task<ActionResult> UpdateParkingPayAsync(ObjectId id, UpdateParkingPayDTO parkingDTO)
     {
       var existingParking = await repository.GetParkingAsync(id);
 
@@ -117,7 +96,7 @@ namespace ParkingControl.Api.Controllers
 
     // PUT /parking/{id}
     [HttpPut("{id}/out")]
-    public async Task<ActionResult> UpdateParkingOutAsync(int id, UpdateParkingOutDTO parkingDTO)
+    public async Task<ActionResult> UpdateParkingOutAsync(ObjectId id, UpdateParkingOutDTO parkingDTO)
     {
       var existingParking = await repository.GetParkingAsync(id);
 
@@ -140,7 +119,7 @@ namespace ParkingControl.Api.Controllers
 
     // DELETE /parking/{id}
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteParkingAsync(int id)
+    public async Task<ActionResult> DeleteParkingAsync(ObjectId id)
     {
       var existingParking = await repository.GetParkingAsync(id);
 

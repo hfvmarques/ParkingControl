@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
 namespace ParkingControl.Api.Entities
 {
   public class Parking
   {
-    public int Id { get; set; }
+    public ObjectId Id { get; set; }
     public string Plate { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]

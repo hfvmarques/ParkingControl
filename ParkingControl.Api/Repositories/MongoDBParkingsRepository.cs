@@ -24,7 +24,7 @@ namespace ParkingControl.Api.Repositories
       await parkingsCollection.InsertOneAsync(parking);
     }
 
-    public async Task<Parking> GetParkingAsync(int id)
+    public async Task<Parking> GetParkingAsync(ObjectId id)
     {
       var filter = filterBuilder.Eq(parking => parking.Id, id);
       return await parkingsCollection.Find(filter).SingleOrDefaultAsync();
@@ -52,7 +52,7 @@ namespace ParkingControl.Api.Repositories
       await parkingsCollection.ReplaceOneAsync(filter, parking);
     }
 
-    public async Task DeleteParkingAsync(int id)
+    public async Task DeleteParkingAsync(ObjectId id)
     {
       var filter = filterBuilder.Eq(parking => parking.Id, id);
       await parkingsCollection.DeleteOneAsync(filter);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Moq;
 using ParkingControl.Api.Controllers;
 using ParkingControl.Api.DTOs;
@@ -23,13 +24,13 @@ namespace ParkingControl.UnitTests
       // Arrange
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync((Parking)null);
 
       var controller = new ParkingsController(repositoryStub.Object);
 
       // Act
-      var result = await controller.GetParkingAsync(rand.Next(1, 1000));
+      var result = await controller.GetParkingAsync(new ObjectId());
 
       // Assert
       result.Result.Should().BeOfType<NotFoundResult>();
@@ -43,13 +44,13 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync(expectedParking);
 
       var controller = new ParkingsController(repositoryStub.Object);
 
       // Act
-      var result = await controller.GetParkingAsync(rand.Next(1, 1000));
+      var result = await controller.GetParkingAsync(new ObjectId());
 
       //Assert
       result.Value.Should().BeEquivalentTo(expectedParking);
@@ -150,7 +151,7 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync(existingParking);
 
       var parkingId = existingParking.Id;
@@ -173,7 +174,7 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync(existingParking);
 
       var parkingId = existingParking.Id;
@@ -197,13 +198,13 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync((Parking)null);
 
       var controller = new ParkingsController(repositoryStub.Object);
 
       // Act
-      var result = await controller.GetParkingAsync(rand.Next(1, 1000));
+      var result = await controller.GetParkingAsync(new ObjectId());
 
       // Assert
       result.Result.Should().BeOfType<NotFoundResult>();
@@ -217,7 +218,7 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync(existingParking);
 
       var parkingId = existingParking.Id;
@@ -240,13 +241,13 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync((Parking)null);
 
       var controller = new ParkingsController(repositoryStub.Object);
 
       // Act
-      var result = await controller.GetParkingAsync(rand.Next(1, 1000));
+      var result = await controller.GetParkingAsync(new ObjectId());
 
       // Assert
       result.Result.Should().BeOfType<NotFoundResult>();
@@ -260,7 +261,7 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync(existingParking);
 
       var parkingId = existingParking.Id;
@@ -282,13 +283,13 @@ namespace ParkingControl.UnitTests
 
       repositoryStub.Setup(
           repo => repo
-          .GetParkingAsync(It.IsAny<int>()))
+          .GetParkingAsync(It.IsAny<ObjectId>()))
           .ReturnsAsync((Parking)null);
 
       var controller = new ParkingsController(repositoryStub.Object);
 
       // Act
-      var result = await controller.GetParkingAsync(rand.Next(1, 1000));
+      var result = await controller.GetParkingAsync(new ObjectId());
 
       // Assert
       result.Result.Should().BeOfType<NotFoundResult>();
@@ -298,7 +299,7 @@ namespace ParkingControl.UnitTests
     {
       return new()
       {
-        Id = rand.Next(1, 1000),
+        Id = new ObjectId(),
         Plate = "ABC-1234",
         EntryDate = DateTimeOffset.UtcNow,
         ExitDate = DateTimeOffset.UtcNow,
