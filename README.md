@@ -16,11 +16,11 @@ A aplicação vai rodar em http://localhost:8080/parking;
 ### Endpoints:
 
 - GET /parking : retorna todas as "reservas";
-- GET /parking/id : retorna a reserva a partir do id;
-- GET /parking?plate=AAA-1234 : retorna histórico de reservas da placa informada;
-- POST /parking { "plate": "AAA-1234" } : insere uma reserva com a placa informada;
-- PUT /parking/id/pay : marca fim da reserva e registra pagamento;
-- PUT /parking/id/out : registra saída do veículo;
+- GET /parking/id : retorna a reserva a partir do id, no formato { "id": "5bf142459b72e12b2b1b2cd", "plate": "AAA-1234", "entryDate": "2021-10-25T01:59:43.5822553+00:00", "exitDate": null, "paid": false, "left": false }
+- GET /parking?plate=AAA-1234 : retorna histórico de reservas da placa informada no mesmo formato do item anterior;
+- POST /parking { "plate": "AAA-1234" } : insere uma reserva com a placa informada, colocando data de entrada do instante de criação e setando nulo as propriedades exitDate, paid e left;
+- PUT /parking/id/pay : marca fim da reserva com horário do instante e registra pagamento (paid = true);
+- PUT /parking/id/out : registra saída do veículo (left = true);
 - GET /health/live : verifica a saúde da aplicação;
 - GET /health/ready : verifica a saúde do mongodb;
 - DELETE /parking/id : deleta a reserva a partir do id informado;
@@ -29,15 +29,8 @@ A aplicação vai rodar em http://localhost:8080/parking;
 
 - A API foi construída em .NET 5, que é a linguagem/framework que possuo mais familiaridade;
 - O formato dos objetos ficaram da seguinte forma: 
-{
-        "id": 1,
-        "plate": "AAA-1234",
-        "entryDate": "2021-10-25T01:59:43.5822553+00:00",
-        "exitDate": null,
-        "paid": false,
-        "left": false
-    }
-- Dito isso, eu realizei várias tentativas e testes porém não consegui que o método GET /parking?plate=AAA-1234 retorne naquele formato do desafio que vocês me enviaram;
+{ "id": 1, "plate": "AAA-1234", "entryDate": "2021-10-25T01:59:43.5822553+00:00", "exitDate": null, "paid": false, "left": false }
+- Dito isso, eu realizei várias tentativas e testes porém não consegui que o método GET /parking?plate=AAA-1234 retorne naquele formato do desafio que me foi enviado;
 - Como solicitado pelo desafio, o método PUT /parking/id/out só registra a saída se o pagamento já tiver sido efetuado. 
 Porém eu tentei mas também não consegui que ele emitisse uma mensagem. A regra é que o método simplesmente não faça nada caso não haja pagamento;
 - Método POST retorna mensagem "Não é um formato válido de placa", caso a placa não esteja no formato "AAA-1234";
@@ -46,7 +39,7 @@ Acredito que seja interessante que ele não exista em modo de produção;
 - Como solicitado no teste, a aplicação está rodando em container do docker, assim como o mongodb, porém não consegui, apesar de diversas tentativas, 
 configurar o docker-compose para rodar os dois no mesmo container;
 
-### Foram construídos 13 testes unitários:
+### Foram construídos 13 testes unitários, para testá-los é necessário instalar a extensão .NET Core Test Explorer no VS Code:
 
 - GetParkingAsync_WithUnexistingParking_ReturnsNotFound;
 - GetParkingAsync_WithExistingParking_ReturnsExpectedParking;
