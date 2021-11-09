@@ -1,8 +1,6 @@
 # ParkingControl
 ## Web API REST em .NET 5 para controle de estacionamento
 
-API Web criada a partir de desafio de processo seletivo da empresa Parafuzo, que atua com plataforma de intermediação de serviços de facilities management em todo o Brasil.
-
 ### Para rodar a aplicação, precisa estar com docker desktop instalado e funcionando e rodar os seguintes comandos:
 - docker network create mongoparking
 - docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin 
